@@ -3,97 +3,47 @@ package com.example.georgesproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.widget.TextView;
+
+import java.util.Locale;
 
 public class ContentActivity extends AppCompatActivity {
+    private int seconds = 0;
 
+
+    private boolean running;
+
+    private boolean wasRunning;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        private int seconds = 0;
-
-      
-        private boolean running;
-
-        private boolean wasRunning;
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState)
-        {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_stopwatch);
-            if (savedInstanceState != null) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_content);
+        if (savedInstanceState != null) {
 
 
-                seconds
-                        = savedInstanceState
-                        .getInt("seconds");
-                running
-                        = savedInstanceState
-                        .getBoolean("running");
-                wasRunning
-                        = savedInstanceState
-                        .getBoolean("wasRunning");
-            }
-            runTimer();
+            seconds
+                    = savedInstanceState
+                    .getInt("seconds");
+            running
+                    = savedInstanceState
+                    .getBoolean("running");
+            wasRunning
+                    = savedInstanceState
+                    .getBoolean("wasRunning");
         }
+        runTimer();
+
+    }
 
 
-        @Override
-        public void onSaveInstanceState(
-                Bundle savedInstanceState)
-        {
-            savedInstanceState
-                    .putInt("seconds", seconds);
-            savedInstanceState
-                    .putBoolean("running", running);
-            savedInstanceState
-                    .putBoolean("wasRunning", wasRunning);
-        }
-
-
-        @Override
-        protected void onPause()
-        {
-            super.onPause();
-            wasRunning = running;
-            running = false;
-        }
-
-
-        @Override
-        protected void onResume()
-        {
-            super.onResume();
-            if (wasRunning) {
-                running = true;
-            }
-        }
-
-
-        public void onClickStart(View view)
-        {
-            running = true;
-        }
-
-
-        public void onClickStop(View view)
-        {
-            running = false;
-        }
-
-
-        public void onClickReset(View view)
-        {
-            running = false;
-            seconds = 0;
-        }
-
-
-        private void runTimer()
+        private void runTimer ()
         {
 
 
             final TextView timeView
-                    = (TextView)findViewById(
+                    = (TextView) findViewById(
                     R.id.time_view);
 
 
@@ -104,8 +54,7 @@ public class ContentActivity extends AppCompatActivity {
             handler.post(new Runnable() {
                 @Override
 
-                public void run()
-                {
+                public void run() {
                     int hours = seconds / 3600;
                     int minutes = (seconds % 3600) / 60;
                     int secs = seconds % 60;
@@ -130,4 +79,68 @@ public class ContentActivity extends AppCompatActivity {
                 }
             });
         }
+
+
+
+    public void onSaveinstancestate(Bundle savedInstanceState)
+    {
+        savedInstanceState
+                .putInt("seconds", seconds);
+        savedInstanceState
+                .putBoolean("running", running);
+        savedInstanceState
+                .putBoolean("wasRunning", wasRunning);
     }
+
+
+    @Override
+    protected void onPause ()
+    {
+        super.onPause();
+        wasRunning = running;
+        running = false;
+    }
+
+
+    @Override
+    protected void onResume ()
+    {
+        super.onResume();
+        if (wasRunning) {
+            running = true;
+        }
+    }
+
+
+   /* public void onClickStart (View view)
+    {
+        running = true;
+    }
+
+
+    public void onClickStop (View view)
+    {
+        running = false;
+    }
+
+
+    public void onClickReset (View view)
+    {
+        running = false;
+        seconds = 0;
+    }*/
+
+
+    public void onClickStart(android.view.View view) {
+        running = true;
+    }
+
+    public void onClickStop(View view) {
+        running = false;
+    }
+
+    public void onClickReset(View view) {
+        running = false;
+        seconds = 0;
+    }
+}
